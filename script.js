@@ -133,19 +133,16 @@ function initRadar() {
 }
 
 /* ══════════════════════════════════════════
-   JARVIS INTRO SEQUENCE (Upgraded)
+   JARVIS INTRO SEQUENCE
 ══════════════════════════════════════════ */
 async function runJarvisIntro() {
-  // Check if the user has already seen the intro this session
-  if (sessionStorage.getItem('jarvisBooted') === 'true') {
-    skipIntro(true); // pass true for instant skip
-    return;
-  }
-
   initRadar();
 
+  /* Live clock */
   const clockEl = document.getElementById('jclock');
-  const tick = () => { if (clockEl) clockEl.textContent = new Date().toLocaleTimeString('en-GB', { hour12: false }); };
+  const tick = () => {
+    if (clockEl) clockEl.textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
+  };
   tick();
   const clockIv = setInterval(tick, 1000);
 
@@ -164,7 +161,7 @@ async function runJarvisIntro() {
 
   await typeText(statusEl, 'AUTHENTICATING USER...', 45);
   await growBar(68, 700);
-  addLog('USER: JACK — AUTHORIZED');
+  addLog('USER: JAYA KUMAR — AUTHORIZED');
 
   await typeText(statusEl, 'CALIBRATING INTERFACE...', 45);
   await growBar(88, 700);
@@ -172,39 +169,26 @@ async function runJarvisIntro() {
 
   await typeText(statusEl, 'ALL SYSTEMS NOMINAL.', 45);
   await growBar(100, 400);
-  addLog('WELCOME, JACK');
+  addLog('WELCOME, JAYA KUMAR');
 
   await sleep(1000);
 
   clearInterval(clockIv);
   cancelAnimationFrame(radarRAF);
-  
-  // Mark as booted for this session
-  sessionStorage.setItem('jarvisBooted', 'true');
-  skipIntro(false);
+  skipIntro();
 }
 
-function skipIntro(instant = false) {
+function skipIntro() {
   cancelAnimationFrame(radarRAF);
   const overlay  = document.getElementById('jintro');
   const mainSite = document.getElementById('main-site');
-  
-  // Mark session storage so manual skips also prevent reload
-  sessionStorage.setItem('jarvisBooted', 'true');
-  
-  if (overlay) {
-    if (instant) {
-      overlay.style.display = 'none';
-    } else {
-      overlay.classList.add('fade-out');
-      setTimeout(() => { overlay.remove(); }, 1500);
-    }
-  }
-  
+  if (overlay)  overlay.classList.add('fade-out');
   if (mainSite) {
     mainSite.classList.add('visible');
+    /* Start all main-site animations */
     initMainSite();
   }
+  setTimeout(() => { if (overlay) overlay.remove(); }, 1500);
 }
 
 
