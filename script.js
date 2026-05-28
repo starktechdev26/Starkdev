@@ -133,16 +133,19 @@ function initRadar() {
 }
 
 /* ══════════════════════════════════════════
-   JARVIS INTRO SEQUENCE
+   JARVIS INTRO SEQUENCE (Upgraded)
 ══════════════════════════════════════════ */
 async function runJarvisIntro() {
+  // Check if the user has already seen the intro this session
+  if (sessionStorage.getItem('jarvisBooted') === 'true') {
+    skipIntro(true); // pass true for instant skip
+    return;
+  }
+
   initRadar();
 
-  /* Live clock */
   const clockEl = document.getElementById('jclock');
-  const tick = () => {
-    if (clockEl) clockEl.textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
-  };
+  const tick = () => { if (clockEl) clockEl.textContent = new Date().toLocaleTimeString('en-GB', { hour12: false }); };
   tick();
   const clockIv = setInterval(tick, 1000);
 
@@ -161,7 +164,7 @@ async function runJarvisIntro() {
 
   await typeText(statusEl, 'AUTHENTICATING USER...', 45);
   await growBar(68, 700);
-  addLog('USER: JAYA KUMAR — AUTHORIZED');
+  addLog('USER: JACK — AUTHORIZED');
 
   await typeText(statusEl, 'CALIBRATING INTERFACE...', 45);
   await growBar(88, 700);
@@ -169,27 +172,41 @@ async function runJarvisIntro() {
 
   await typeText(statusEl, 'ALL SYSTEMS NOMINAL.', 45);
   await growBar(100, 400);
-  addLog('WELCOME, JAYA KUMAR');
+  addLog('WELCOME, JACK');
 
   await sleep(1000);
 
   clearInterval(clockIv);
   cancelAnimationFrame(radarRAF);
-  skipIntro();
+  
+  // Mark as booted for this session
+  sessionStorage.setItem('jarvisBooted', 'true');
+  skipIntro(false);
 }
 
-function skipIntro() {
+function skipIntro(instant = false) {
   cancelAnimationFrame(radarRAF);
   const overlay  = document.getElementById('jintro');
   const mainSite = document.getElementById('main-site');
-  if (overlay)  overlay.classList.add('fade-out');
+  
+  // Mark session storage so manual skips also prevent reload
+  sessionStorage.setItem('jarvisBooted', 'true');
+  
+  if (overlay) {
+    if (instant) {
+      overlay.style.display = 'none';
+    } else {
+      overlay.classList.add('fade-out');
+      setTimeout(() => { overlay.remove(); }, 1500);
+    }
+  }
+  
   if (mainSite) {
     mainSite.classList.add('visible');
-    /* Start all main-site animations */
     initMainSite();
   }
-  setTimeout(() => { if (overlay) overlay.remove(); }, 1500);
 }
+
 
 /* ══════════════════════════════════════════
    PARTICLES CANVAS (Hero background)
