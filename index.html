@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>STARK DEV | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Jaya Kumar</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="greeting">👋 Hello, I'm Jaya Kumar</p>
+      <h1>Your Tech Dev<span>Stark Build</span></h1>
+      <p class="tagline">Web Developer · Designer · Problem Solver</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn primary">View My Work</a>
+        <a href="#contact" class="btn secondary">Hire Me</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="https://avatars.githubusercontent.com/u/9919?v=4" alt="Profile Photo" />
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <h2 class="section-title">About <span>Me</span></h2>
+    <div class="about-box">
+      <p>
+        Hi! I'm a passionate developer who loves building clean, responsive websites
+        and solving real-world problems with code. I'm always learning new technologies
+        and pushing my skills further every day.
+      </p>
+      <a href="#" class="btn primary" download>Download CV</a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section alt">
+    <h2 class="section-title">My <span>Skills</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card"><i class="fab fa-html5"></i><p>HTML5</p></div>
+      <div class="skill-card"><i class="fab fa-css3-alt"></i><p>CSS3</p></div>
+      <div class="skill-card"><i class="fab fa-js"></i><p>JavaScript</p></div>
+      <div class="skill-card"><i class="fab fa-react"></i><p>React</p></div>
+      <div class="skill-card"><i class="fab fa-python"></i><p>Python</p></div>
+      <div class="skill-card"><i class="fab fa-github"></i><p>GitHub</p></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <h2 class="section-title">My <span>Projects</span></h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3> 🚨 RAKSHA-SURAKSHA App 🚨</h3>
+        <p>A fully responsive sos site built with HTML, CSS & JavaScript and App with Java & Xml.</p>
+        <a href="#" class="btn small">View Project</a>
+      </div>
+      <div class="project-card">
+        <h3>🌤️ Weather App</h3>
+        <p>Real-time weather tracker using OpenWeather API.</p>
+        <a href="#" class="btn small">View Project</a>
+      </div>
+      <div class="project-card">
+        <h3> Jarvis Assistant </h3>
+        <p>A command based offline assistant app with local storage support.</p>
+        <a href="#" class="btn small">View Project</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section alt">
+    <h2 class="section-title">Contact <span>Me</span></h2>
+    <div class="contact-box">
+      <p>Have a project in mind? Let's build something amazing together!</p>
+      <div class="contact-links">
+        <a href="mailto:you@email.com"><i class="fas fa-envelope"></i> you@email.com</a>
+        <a href="https://github.com/yourusername"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/yourprofile"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 STARK DEV. All Rights Reserved</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
