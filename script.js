@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    STARK DEV INTERACTIVE ENGINE — script.js
-   Now with Voice Recognition & Curved Looping Neural Background
+   Mark VII: Voice Recognition Diagnostic & Mobile Patch
 ═══════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -14,9 +14,8 @@ document.addEventListener('click', (e) => {
   splash.style.left = e.clientX + 'px';
   splash.style.top = e.clientY + 'px';
   document.body.appendChild(splash);
-  setTimeout(() => splash.remove(), 600); // Clean up DOM after animation
+  setTimeout(() => splash.remove(), 600); 
 });
-
 
 /* --- VOICE SYNTHESIS (SPEAKING) --- */
 const synth = window.speechSynthesis;
@@ -38,7 +37,7 @@ loadVoices();
 
 function speakVoice(text) {
   if (!synth) return;
-  synth.cancel(); 
+  synth.cancel(); // Force stop any ongoing speech
   const utterance = new SpeechSynthesisUtterance(text);
   if (aiVoice) utterance.voice = aiVoice;
   utterance.pitch = 0.8; 
@@ -46,8 +45,7 @@ function speakVoice(text) {
   synth.speak(utterance);
 }
 
-
-/* --- VOICE RECOGNITION (LISTENING) --- */
+/* --- VOICE RECOGNITION (LISTENING - UPGRADED FOR MOBILE) --- */
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = null;
 let isListening = false;
@@ -57,12 +55,13 @@ function initVoiceCommand() {
   const micIcon = document.querySelector('#mic-btn i');
   
   if (!SpeechRecognition) {
-    micBtn.style.display = 'none'; // Hide if browser doesn't support it
+    micBtn.style.display = 'none'; 
+    appendTerminalRow("SYSTEM ALERT: Voice recognition not supported in this browser.", false);
     return;
   }
 
   recognition = new SpeechRecognition();
-  recognition.continuous = false; // Auto stops when you stop talking (good for mobile)
+  recognition.continuous = false; 
   recognition.interimResults = false;
   recognition.lang = 'en-US';
 
@@ -80,8 +79,20 @@ function initVoiceCommand() {
   };
 
   recognition.onerror = (e) => {
-    if (e.error !== 'no-speech') {
-        appendTerminalRow(`Audio Error: ${e.error}`, false);
+    isListening = false;
+    micBtn.classList.remove('listening');
+    micIcon.className = 'fas fa-microphone-slash';
+    
+    // Detailed diagnostic logging for the Matrix Terminal
+    if (e.error === 'not-allowed') {
+      appendTerminalRow("MIC ERROR: Permission Denied. Check Chrome Site Settings.", false);
+      speakVoice("Microphone access is currently blocked by your device settings.");
+    } else if (e.error === 'no-speech') {
+      appendTerminalRow("MIC ERROR: No speech detected. Channel closed.", false);
+    } else if (e.error === 'network') {
+      appendTerminalRow("MIC ERROR: Network routing failed.", false);
+    } else {
+      appendTerminalRow(`MIC ERROR: ${e.error}`, false);
     }
   };
 
@@ -91,25 +102,32 @@ function initVoiceCommand() {
     micIcon.className = 'fas fa-microphone-slash';
   };
 
-  micBtn.addEventListener('click', () => {
-    if (isListening) {
-      recognition.stop();
-    } else {
-      recognition.start();
+  micBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    try {
+      if (isListening) {
+        recognition.stop();
+        appendTerminalRow("Aural receptors manually deactivated.", false);
+      } else {
+        synth.cancel(); // Stop AI voice so it doesn't listen to itself
+        recognition.start();
+      }
+    } catch (err) {
+      appendTerminalRow(`Mic Boot Error: ${err.message}`, false);
     }
   });
 }
 
 function processVoiceCommand(cmd) {
-  if (cmd.includes('assemble')) {
+  if (cmd.includes('assemble') || cmd.includes('protocol')) {
     triggerProtocolAssemble();
-  } else if (cmd.includes('steve')) {
+  } else if (cmd.includes('steve') || cmd.includes('raksha') || cmd.includes('suraksha')) {
     document.querySelector('[data-agent="STEVE"]')?.click();
-  } else if (cmd.includes('friday')) {
+  } else if (cmd.includes('friday') || cmd.includes('master')) {
     document.querySelector('[data-agent="FRIDAY"]')?.click();
   } else if (cmd.includes('jarvis')) {
     document.querySelector('[data-agent="JARVIS"]')?.click();
-  } else if (cmd.includes('hello') || cmd.includes('hi')) {
+  } else if (cmd.includes('hello') || cmd.includes('hi') || cmd.includes('jack')) {
     speakVoice("Hello Jack. All systems are currently awaiting your command.");
     appendTerminalRow("System greeting acknowledged.", true);
   } else if (cmd.includes('clear')) {
@@ -246,7 +264,7 @@ async function triggerProtocolAssemble(e) {
   appendTerminalRow(finalMessage, false); speakVoice(finalMessage);
 }
 
-/* --- BACKGROUND GRAPH (UPGRADED CURVED LOOPING ANIMATION) --- */
+/* --- BACKGROUND GRAPH (CURVED LOOPING) --- */
 function initParticles() {
   const cv = document.getElementById('ptx'); if (!cv) return;
   const section = document.getElementById('home'); const ctx = cv.getContext('2d');
@@ -254,7 +272,6 @@ function initParticles() {
   const resize = () => { cv.width = section.offsetWidth; cv.height = section.offsetHeight; };
   resize(); window.addEventListener('resize', resize);
 
-  // Added base coordinates, angle, and sweep for curved orbital math
   const dots = Array.from({ length: 45 }, () => ({
     baseX: Math.random() * cv.width, baseY: Math.random() * cv.height,
     x: 0, y: 0,
@@ -266,12 +283,10 @@ function initParticles() {
   function frame() {
     ctx.clearRect(0, 0, cv.width, cv.height);
     dots.forEach(d => {
-      // Drifting Base
       d.baseX += d.vx; d.baseY += d.vy;
       if (d.baseX < 0 || d.baseX > cv.width) d.vx *= -1;
       if (d.baseY < 0 || d.baseY > cv.height) d.vy *= -1;
       
-      // Curved Loop Orbital Math (Sine/Cosine over the drifting base)
       d.angle += d.orbitSpeed;
       d.x = d.baseX + Math.sin(d.angle) * d.orbitRadius;
       d.y = d.baseY + Math.cos(d.angle) * d.orbitRadius;
