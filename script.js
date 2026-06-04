@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    STARK DEV INTERACTIVE ENGINE — script.js
-   Now featuring Web Speech API Voice Synthesis
+   Featuring Voice Synthesis, Terminal Links & Constrained Radar
 ═══════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -11,37 +11,27 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const synth = window.speechSynthesis;
 let aiVoice = null;
 
-// Load voices asynchronously (browsers load these in the background)
 function loadVoices() {
   const voices = synth.getVoices();
   if (voices.length === 0) return;
-  
-  // Try to find a British/UK Male voice for that JARVIS aesthetic, otherwise fallback to default English
   aiVoice = voices.find(v => v.name.includes('UK English Male') || v.name.includes('Great Britain'))
          || voices.find(v => v.lang === 'en-GB')
          || voices.find(v => v.lang.startsWith('en'))
          || voices[0];
 }
 
-// Trigger load when voices are ready
 if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = loadVoices;
 }
-// Run once immediately just in case they are already loaded
 loadVoices();
 
 function speakVoice(text) {
   if (!synth) return;
-  
-  // Cancel any currently speaking audio so commands feel snappy
   synth.cancel(); 
-  
   const utterance = new SpeechSynthesisUtterance(text);
   if (aiVoice) utterance.voice = aiVoice;
-  
-  utterance.pitch = 0.8; // Slightly deeper pitch
-  utterance.rate = 1.05; // Slightly faster pacing
-  
+  utterance.pitch = 0.8; 
+  utterance.rate = 1.05; 
   synth.speak(utterance);
 }
 
@@ -89,28 +79,36 @@ function addIntroLog(text) {
   if (log.children.length > 3) log.children[0].remove();
 }
 
-/* --- CINEMATIC RADAR --- */
-const BLIPS = [[0.7, 0.30], [2.1, 0.58], [3.8, 0.72], [4.6, 0.42]];
+/* --- CINEMATIC RADAR (FIXED CONTAINMENT) --- */
 let radarAngle = 0, radarRAF;
 
 function initRadar() {
   const cv  = document.getElementById('jradar');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const W = cv.width, CX = W / 2, CY = W / 2, R = CX * 0.85;
+  
+  const W = cv.width;
+  const CX = W / 2;
+  const CY = W / 2;
+  // Reduced radius slightly so sweep doesn't bleed out of the CSS circles
+  const R = CX - 2; 
 
   function draw() {
     ctx.clearRect(0, 0, W, W);
+    
+    // Draw JS rings strictly within boundaries
     [R, R * 0.6, R * 0.35].forEach(r => {
       ctx.beginPath(); ctx.arc(CX, CY, r, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(0,212,255,.15)'; ctx.lineWidth = .6; ctx.stroke();
+      ctx.strokeStyle = 'rgba(0,212,255,.12)'; ctx.lineWidth = .6; ctx.stroke();
     });
+    
     ctx.save(); ctx.translate(CX, CY); ctx.rotate(radarAngle);
     const g = ctx.createLinearGradient(0, 0, R, 0);
     g.addColorStop(0, 'rgba(0,212,255,0)'); g.addColorStop(1, 'rgba(0,212,255,.2)');
     ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R, -Math.PI / 4, 0); ctx.closePath();
     ctx.fillStyle = g; ctx.fill();
     ctx.restore();
+    
     radarAngle += 0.02;
     radarRAF = requestAnimationFrame(draw);
   }
@@ -157,24 +155,29 @@ function skipIntro() {
   setTimeout(() => { if (overlay) overlay.remove(); }, 1100);
 }
 
-/* --- DYNAMIC CONSOLE STREAM LOGGER --- */
-function appendTerminalRow(text, isHighlight = false) {
+/* --- DYNAMIC CONSOLE STREAM LOGGER (UPGRADED WITH URLS) --- */
+function appendTerminalRow(text, isHighlight = false, linkUrl = null) {
   const consoleBody = document.getElementById('matrix-console');
   if (!consoleBody) return;
   
   const row = document.createElement('div');
   row.className = `term-row ${isHighlight ? 'text-highlight' : ''}`;
-  row.textContent = `> ${text}`;
+  
+  if (linkUrl) {
+    // Injects a clickable HTML anchor tag directly inside the log
+    row.innerHTML = `> ${text} <a href="${linkUrl}" target="_blank" style="color:var(--cyan); font-weight:bold; margin-left:8px; text-decoration:underline;">[INITIATE PORTAL]</a>`;
+  } else {
+    row.textContent = `> ${text}`;
+  }
   
   consoleBody.appendChild(row);
   consoleBody.scrollTop = consoleBody.scrollHeight;
 }
 
-/* --- SIMULATE THE MULTI-AGENT ROLL CALL SEQUENCER WITH VOICE --- */
+/* --- SIMULATE THE MULTI-AGENT ROLL CALL SEQUENCER --- */
 async function triggerProtocolAssemble(e) {
   if (e) e.preventDefault();
   
-  // Ensure voices are loaded
   if (!aiVoice) loadVoices();
   
   const bannerText = document.getElementById('protocol-status-text');
@@ -184,14 +187,11 @@ async function triggerProtocolAssemble(e) {
   if (indicator) indicator.classList.add('active');
   if (bannerText) bannerText.textContent = "ACTIVATING AVENGERS PROTOCOL // INITIALIZING ROLL CALL";
   
-  // Clean up any old active instances safely
   nodes.forEach(n => n.classList.remove('activated'));
   
-  // Initial speech
   speakVoice("Avengers assemble. All agents reporting in.");
-  await sleep(2500); // Give the browser time to read the initial line
+  await sleep(2500); 
   
-  // Sequence each node precisely one after another
   for (let index = 0; index < nodes.length; index++) {
     const node = nodes[index];
     const agentName = node.getAttribute('data-agent');
@@ -201,12 +201,8 @@ async function triggerProtocolAssemble(e) {
     if (bannerText) bannerText.textContent = `ORCHESTRATING PROTOCOLS // AGENT [${agentName}] ONLINE`;
     
     appendTerminalRow(logMessage, true);
-    
-    // Command the browser to read the log out loud
     speakVoice(logMessage);
     
-    // Calculate a dynamic sleep based on text length so voices don't overlap
-    // Roughly 80ms per character, minimum 1800ms wait between agents
     const voiceDelay = Math.max(1800, logMessage.length * 80);
     await sleep(voiceDelay); 
   }
@@ -341,19 +337,19 @@ function initMainSite() {
   initParticles(); initScrollReveal(); initNavbar(); initTilt(); initCursor(); heroTyping();
   document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('visible'));
   
-  // Bind click interactions to tactical layout cards for manual roll calls and voice feedback
+  // MANUAL OVERRIDE (Click interactions map to specific portal URLs)
   document.querySelectorAll('.agent-node').forEach(node => {
     node.addEventListener('click', () => {
-      // Ensure voices are loaded if clicked early
       if (!aiVoice) loadVoices();
 
       node.classList.toggle('activated');
       const name = node.getAttribute('data-agent');
       const msg = node.getAttribute('data-log');
+      const linkUrl = node.getAttribute('data-url'); // Extracts portal URL if assigned
 
       if (node.classList.contains('activated')) {
         appendTerminalRow(`Manual override: Connection established to [${name}].`, true);
-        appendTerminalRow(msg, false);
+        appendTerminalRow(msg, false, linkUrl);
         speakVoice(`Override accepted. ${msg}`);
       } else {
         const sleepMsg = `Connection closed with ${name}. Node entering sleep mode.`;
