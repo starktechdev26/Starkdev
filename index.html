@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>STARK DEV | Jaya Kumar</title>
+  <title>STARK DEV | AVENGERS PROTOCOL</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════
+     JARVIS CINEMATIC INTRO OVERLAY
+═══════════════════════════════════════ -->
 <div id="jintro">
   <div class="jcorn jtl"></div>
   <div class="jcorn jtr"></div>
@@ -58,38 +61,41 @@
   </div>
 
   <div class="jside jright">
-    <div class="jrow">LAT      <b>28.6°N</b></div>
-    <div class="jrow">LON      <b>77.2°E</b></div>
+    <div class="jrow">LAT      <b>13.0°N</b></div>
+    <div class="jrow">LON      <b>77.3°E</b></div>
     <div class="jrow">TIME     <b id="jclock">--:--:--</b></div>
     <div class="jrow">STATUS   <b>LIVE</b></div>
     <div class="jrow">MODE     <b>STEALTH</b></div>
     <div class="jrow">USER     <b>AUTHORIZED</b></div>
-    <div class="jrow">VER      <b>v4.2.1</b></div>
+    <div class="jrow">VER      <b>v4.5.0</b></div>
   </div>
 
-  <button class="jskip" onclick="skipIntro()">[ SKIP INTRO]</button>
+  <button class="jskip" onclick="skipIntro()">[ INITIATE OVERRIDE ]</button>
 </div>
 
+<!-- ═══════════════════════════════════════
+     MAIN SITE / SYSTEM COMMAND DASHBOARD
+═══════════════════════════════════════ -->
 <div id="main-site">
-
   <div id="sprogress"></div>
-
   <div id="cursor"></div>
   <div id="cursor-dot"></div>
 
+  <!-- ── NAVBAR ── -->
   <nav class="navbar" id="navbar">
-    <a href="#home" class="logo">⬡ STARK<span>DEV</span></a>
+    <a href="#home" class="logo">⬡ AVENGERS<span>.DASH</span></a>
     <ul class="navlinks" id="navlinks">
-      <li><a href="#about"   class="nlink">About</a></li>
-      <li><a href="#skills"  class="nlink">Skills</a></li>
-      <li><a href="#projects"class="nlink">Projects</a></li>
-      <li><a href="#contact" class="nlink">Contact</a></li>
+      <li><a href="#home"     class="nlink">Core</a></li>
+      <li><a href="#protocol" class="nlink">Agents</a></li>
+      <li><a href="#projects" class="nlink">Builds</a></li>
+      <li><a href="#contact"  class="nlink">Uplink</a></li>
     </ul>
     <div class="hamburger" id="ham" onclick="toggleNav()">
       <span></span><span></span><span></span>
     </div>
   </nav>
 
+  <!-- ── CORE HUB (HERO) ── -->
   <section id="home" class="hero">
     <canvas id="ptx"></canvas>
     <div class="hero-grid-overlay"></div>
@@ -97,7 +103,7 @@
     <div class="hero-content reveal">
       <p class="hero-pre">
         <span class="hpre-line"></span>
-        &nbsp;STARK DEV · SYSTEM ONLINE&nbsp;
+        &nbsp;ORCHESTRATOR FRAMEWORK ACTIVE&nbsp;
         <span class="hpre-line"></span>
       </p>
       <h1 class="hero-name">Jaya <span>Kumar</span></h1>
@@ -105,31 +111,22 @@
         <span id="typed"></span><span class="tcursor">|</span>
       </div>
       <p class="hero-desc">
-        Building next-gen web experiences with precision, power, and purpose.
+        Deploying defensive computational modules, mobile system security nodes, and interconnected full-stack frameworks.
       </p>
       <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">
-          View My Work &nbsp;<i class="fas fa-chevron-right"></i>
+        <a href="#protocol" class="btn btn-primary" onclick="triggerProtocolAssemble(event)">
+          <i class="fas fa-bolt"></i> &nbsp; Assemble Agents
         </a>
         <a href="#contact" class="btn btn-outline">
-          Hire Me &nbsp;<i class="fas fa-paper-plane"></i>
+          Secure Link &nbsp;<i class="fas fa-paper-plane"></i>
         </a>
       </div>
       <div class="hero-stats">
-        <div class="hstat">
-          <span class="hnum" data-to="10">0</span>+
-          <small>Projects</small>
-        </div>
+        <div class="hstat"><span class="hnum" data-to="21">0</span><small>Agents Ready</small></div>
         <div class="hsdiv"></div>
-        <div class="hstat">
-          <span class="hnum" data-to="3">0</span>+
-          <small>Yrs Exp</small>
-        </div>
+        <div class="hstat"><span class="hnum" data-to="10">0</span>+<small>Deployments</small></div>
         <div class="hsdiv"></div>
-        <div class="hstat">
-          <span class="hnum" data-to="5">0</span>+
-          <small>Tech Stack</small>
-        </div>
+        <div class="hstat"><span class="hnum" data-to="100">0</span>%<small>Uptime</small></div>
       </div>
     </div>
 
@@ -142,137 +139,172 @@
         <img src="https://raw.githubusercontent.com/starktechdev26/Starkdev/main/IMG_20260518_223810_365.webp"
              alt="Jaya Kumar" class="hv-img"/>
       </div>
-      <div class="hv-badge"><i class="fas fa-bolt"></i>&nbsp;STARK DEV</div>
+      <div class="hv-badge"><i class="fas fa-shield-alt"></i>&nbsp;COMMAND CENTRE</div>
     </div>
   </section>
 
-  <section id="about" class="section">
+  <!-- ── AGENTS PROTOCOL STATUS GRID ── -->
+  <section id="protocol" class="section alt">
     <div class="sec-head reveal">
-      <p class="sec-pre">// WHO AM I</p>
-      <h2 class="sec-title">About <span>Me</span></h2>
+      <p class="sec-pre">// SUBSYSTEM ORCHESTRATION</p>
+      <h2 class="sec-title">Agent <span>Network Cluster</span></h2>
       <div class="sec-line"></div>
     </div>
 
-    <div class="about-grid">
-      <div class="about-card reveal">
-        <div class="ac-icon"><i class="fas fa-user-astronaut"></i></div>
-        <h3>The Developer</h3>
-        <p>Hi! I'm <strong>Jaya Kumar</strong>, a passionate developer who loves building clean, responsive websites and solving real-world problems with code. Always learning, always building.</p>
+    <!-- Global Framework Control Status -->
+    <div class="protocol-banner reveal">
+      <div class="status-indicator-node sync-pulse"></div>
+      <div class="banner-text" id="protocol-status-text">SYSTEM STANDBY // ALL AGENTS IDLE</div>
+    </div>
+
+    <div class="agents-matrix">
+      <!-- Agent 1: JARVIS -->
+      <div class="agent-node reveal color-jarvis" data-agent="JARVIS" data-log="JARVIS Online. Prime Orchestrator Active.">
+        <div class="agent-header">
+          <span class="agent-title">JARVIS</span>
+          <span class="agent-stat">100/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">CORE NET</span>
+          <span class="agent-mode">SYS ACTIVE</span>
+        </div>
       </div>
-      <div class="about-card reveal delay-1">
-        <div class="ac-icon"><i class="fas fa-microchip"></i></div>
-        <h3>The Builder</h3>
-        <p>From RAKSHA-SURAKSHA to Jarvis Assistant — I build what matters. Full-stack web apps, Android apps, and AI-powered tools are my playground.</p>
+
+      <!-- Agent 2: FRIDAY -->
+      <div class="agent-node reveal delay-1 color-friday" data-agent="FRIDAY" data-log="FRIDAY Active. Daily Intelligence Framework nominal.">
+        <div class="agent-header">
+          <span class="agent-title">FRIDAY</span>
+          <span class="agent-stat">90/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">UI / HTML5</span>
+          <span class="agent-mode">MONITORING</span>
+        </div>
       </div>
-      <div class="about-card reveal delay-2">
-        <div class="ac-icon"><i class="fas fa-rocket"></i></div>
-        <h3>The Vision</h3>
-        <p>Inspired by Stark's philosophy — every line of code is a step toward something greater. Technology should be powerful, precise, and purposeful.</p>
+
+      <!-- Agent 3: ORACLE -->
+      <div class="agent-node reveal delay-2 color-oracle" data-agent="ORACLE" data-log="ORACLE Active. 12 background web animations running smoothly.">
+        <div class="agent-header">
+          <span class="agent-title">ORACLE</span>
+          <span class="agent-stat">85/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">CSS3 ENG</span>
+          <span class="agent-mode">AUTOMATION</span>
+        </div>
+      </div>
+
+      <!-- Agent 4: ZEUS -->
+      <div class="agent-node reveal delay-3 color-zeus" data-agent="ZEUS" data-log="ZEUS Online. Core processing channels stable.">
+        <div class="agent-header">
+          <span class="agent-title">ZEUS</span>
+          <span class="agent-stat">80/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">JS ROUTER</span>
+          <span class="agent-mode">PIPELINE</span>
+        </div>
+      </div>
+
+      <!-- Agent 5: STARK -->
+      <div class="agent-node reveal color-stark" data-agent="STARK" data-log="STARK Framework Active. Project registries fully mapped.">
+        <div class="agent-header">
+          <span class="agent-title">STARK</span>
+          <span class="agent-stat">75/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">PYTHON COGNITION</span>
+          <span class="agent-mode">COMPUTING</span>
+        </div>
+      </div>
+
+      <!-- Agent 6: STEVE -->
+      <div class="agent-node reveal delay-1 color-steve" data-agent="STEVE" data-log="STEVE Subsystem Live. Application build trees compiled.">
+        <div class="agent-header">
+          <span class="agent-title">STEVE</span>
+          <span class="agent-stat">72/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">ANDROID DEV</span>
+          <span class="agent-mode">STANDBY</span>
+        </div>
+      </div>
+
+      <!-- Agent 7: HERALD -->
+      <div class="agent-node reveal delay-2 color-herald" data-agent="HERALD" data-log="HERALD Communication Node functional. Webhook signals optimized.">
+        <div class="agent-header">
+          <span class="agent-title">HERALD</span>
+          <span class="agent-stat">78/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">JAVA CORE</span>
+          <span class="agent-mode">LISTENING</span>
+        </div>
+      </div>
+
+      <!-- Agent 8: ULTRON -->
+      <div class="agent-node reveal delay-3 color-ultron" data-agent="ULTRON" data-log="ULTRON Security Layer Enabled. All entry endpoints restricted and shielded.">
+        <div class="agent-header">
+          <span class="agent-title">ULTRON</span>
+          <span class="agent-stat">88/100</span>
+        </div>
+        <div class="agent-core-display">
+          <div class="agent-ring"></div>
+          <div class="agent-pulse-waves"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-footer">
+          <span class="agent-tag">GITHUB / SEC</span>
+          <span class="agent-mode">SHIELD ON</span>
+        </div>
       </div>
     </div>
 
-    <div class="text-center reveal delay-1">
-      <a href="#" class="btn btn-primary" download>
-        <i class="fas fa-download"></i>&nbsp; Download CV
-      </a>
+    <!-- Immersive Rolling Terminal Console Logs -->
+    <div class="matrix-terminal reveal">
+      <div class="terminal-header">
+        <span class="t-dot red"></span><span class="t-dot yellow"></span><span class="t-dot green"></span>
+        <span class="t-title">AVENGERS_PROTO_LOG//</span>
+      </div>
+      <div class="terminal-body" id="matrix-console">
+        <div class="term-row text-mute">> Initialize global monitoring cluster matrix...</div>
+        <div class="term-row text-mute">> Core variables loaded successfully. Awaiting terminal roll call command.</div>
+      </div>
     </div>
   </section>
 
-  <section id="skills" class="section alt">
-    <div class="sec-head reveal">
-      <p class="sec-pre">// CAPABILITIES</p>
-      <h2 class="sec-title">My <span>Skills</span></h2>
-      <div class="sec-line"></div>
-    </div>
-
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <div class="sk-wrap">
-          <i class="fab fa-html5"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="90"/>
-          </svg>
-        </div>
-        <p>HTML5</p><small>90%</small>
-      </div>
-      <div class="skill-card reveal delay-1">
-        <div class="sk-wrap">
-          <i class="fab fa-css3-alt"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="85"/>
-          </svg>
-        </div>
-        <p>CSS3</p><small>85%</small>
-      </div>
-      <div class="skill-card reveal delay-2">
-        <div class="sk-wrap">
-          <i class="fab fa-js"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="80"/>
-          </svg>
-        </div>
-        <p>JavaScript</p><small>80%</small>
-      </div>
-      <div class="skill-card reveal delay-3">
-        <div class="sk-wrap">
-          <i class="fab fa-react"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="70"/>
-          </svg>
-        </div>
-        <p>React</p><small>70%</small>
-      </div>
-      <div class="skill-card reveal">
-        <div class="sk-wrap">
-          <i class="fab fa-python"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="75"/>
-          </svg>
-        </div>
-        <p>Python</p><small>75%</small>
-      </div>
-      <div class="skill-card reveal delay-1">
-        <div class="sk-wrap">
-          <i class="fab fa-android"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="72"/>
-          </svg>
-        </div>
-        <p>Android</p><small>72%</small>
-      </div>
-      <div class="skill-card reveal delay-2">
-        <div class="sk-wrap">
-          <i class="fas fa-coffee"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="78"/>
-          </svg>
-        </div>
-        <p>Java</p><small>78%</small>
-      </div>
-      <div class="skill-card reveal delay-3">
-        <div class="sk-wrap">
-          <i class="fab fa-github"></i>
-          <svg viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="34" class="sk-track"/>
-            <circle cx="40" cy="40" r="34" class="sk-fill" data-p="88"/>
-          </svg>
-        </div>
-        <p>GitHub</p><small>88%</small>
-      </div>
-    </div>
-  </section>
-
+  <!-- ── PRODUCTION DEPLOYMENTS (PROJECTS) ── -->
   <section id="projects" class="section">
     <div class="sec-head reveal">
-      <p class="sec-pre">// MY BUILDS</p>
-      <h2 class="sec-title">My <span>Projects</span></h2>
+      <p class="sec-pre">// STRATEGIC DEFENSE BUILDS</p>
+      <h2 class="sec-title">Operational <span>Projects</span></h2>
       <div class="sec-line"></div>
     </div>
 
@@ -280,7 +312,7 @@
       <div class="proj-card reveal tilt">
         <span class="proj-num">01</span>
         <div class="proj-top">
-          <i class="fas fa-folder-open pf-ico"></i>
+          <i class="fas fa-shield-halved pf-ico"></i>
           <div class="proj-ext">
             <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
             <a href="#" aria-label="Live"><i class="fas fa-external-link-alt"></i></a>
@@ -288,7 +320,7 @@
         </div>
         <div class="proj-emoji">🚨</div>
         <h3>RAKSHA-SURAKSHA</h3>
-        <p>A fully responsive SOS emergency app — web + Android. Built to save lives with instant location-based alerts.</p>
+        <p>A completely integrated crisis SOS infrastructure supporting geolocation broadcasting updates and automated safety triggers across devices.</p>
         <div class="proj-tags">
           <span>HTML</span><span>CSS</span><span>Java</span><span>XML</span>
         </div>
@@ -297,15 +329,15 @@
       <div class="proj-card reveal delay-1 tilt">
         <span class="proj-num">02</span>
         <div class="proj-top">
-          <i class="fas fa-folder-open pf-ico"></i>
+          <i class="fas fa-cloud-sun pf-ico"></i>
           <div class="proj-ext">
             <a href="#"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fas fa-external-link-alt"></i></a>
           </div>
         </div>
         <div class="proj-emoji">🌤️</div>
-        <h3>Weather App</h3>
-        <p>Real-time weather tracker using OpenWeather API with live forecasts, location detection, and beautiful UI.</p>
+        <h3>Atmospheric Tracker</h3>
+        <p>High-precision telemetry analytics module consuming asynchronous third-party weather API maps and geolocation matrix streams.</p>
         <div class="proj-tags">
           <span>JavaScript</span><span>API</span><span>CSS</span>
         </div>
@@ -314,15 +346,15 @@
       <div class="proj-card reveal delay-2 tilt">
         <span class="proj-num">03</span>
         <div class="proj-top">
-          <i class="fas fa-folder-open pf-ico"></i>
+          <i class="fas fa-robot pf-ico"></i>
           <div class="proj-ext">
             <a href="#"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fas fa-external-link-alt"></i></a>
           </div>
         </div>
         <div class="proj-emoji">🤖</div>
-        <h3>Jarvis Assistant</h3>
-        <p>Command-based offline AI assistant inspired by Iron Man's JARVIS. Voice commands and local storage support.</p>
+        <h3>Jarvis Assistant Node</h3>
+        <p>Automated command-line companion structured for processing direct programmatic instructions using speech indexing pipelines.</p>
         <div class="proj-tags">
           <span>Python</span><span>AI</span><span>Voice</span>
         </div>
@@ -330,42 +362,46 @@
     </div>
   </section>
 
+  <!-- ── COGNITIVE SECURE UPLINK (CONTACT) ── -->
   <section id="contact" class="section alt">
     <div class="sec-head reveal">
-      <p class="sec-pre">// REACH OUT</p>
-      <h2 class="sec-title">Contact <span>Me</span></h2>
+      <p class="sec-pre">// ESTABLISH FREQUENCY CONNECTION</p>
+      <h2 class="sec-title">Secure <span>Uplink</span></h2>
       <div class="sec-line"></div>
     </div>
 
     <p class="contact-lead reveal">
-      Have a project in mind? Let's build something amazing together!
+      Ready to synchronize tasks or integrate operational software arrays? Initiate uplink below.
     </p>
 
     <div class="contact-grid">
-      <a href="mailto:you@email.com" class="cc reveal">
+      <a href="mailto:your_encrypted_email@domain.com" class="cc reveal">
         <i class="fas fa-envelope"></i>
-        <span>Email</span>
-        <small>you@email.com</small>
+        <span>Direct Channel</span>
+        <small>Secure Mail</small>
       </a>
       <a href="https://github.com/starktechdev26" target="_blank" class="cc reveal delay-1">
         <i class="fab fa-github"></i>
-        <span>GitHub</span>
+        <span>GitHub Array</span>
         <small>@starktechdev26</small>
       </a>
-      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="cc reveal delay-2">
+      <a href="#" target="_blank" class="cc reveal delay-2">
         <i class="fab fa-linkedin"></i>
-        <span>LinkedIn</span>
-        <small>Jaya Kumar</small>
+        <span>Network Uplink</span>
+        <small>Corporate Node</small>
       </a>
     </div>
   </section>
 
+  <!-- ── CONSOLE FOOTER ── -->
   <footer>
-    <p class="footer-logo">⬡ STARK DEV</p>
-    <p class="footer-copy">© 2026 STARK DEV · Built with ❤️ &amp; Iron Will by <strong>Jaya Kumar</strong></p>
-    <a href="#home" class="back-top">▲ Back to Top</a>
+    <p class="footer-logo">⬡ STARK DEV PANEL</p>
+    <p class="footer-copy">© 2026 STARK DEV · Engineered with precision and absolute iron resolve.</p>
+    <a href="#home" class="back-top">▲ Return to Origin</a>
   </footer>
 
-</div><script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
