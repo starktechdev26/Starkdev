@@ -1,11 +1,51 @@
 /* ═══════════════════════════════════════════════════════════
    STARK DEV INTERACTIVE ENGINE — script.js
+   Now featuring Web Speech API Voice Synthesis
 ═══════════════════════════════════════════════════════════ */
 
 'use strict';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+/* --- VOICE SYNTHESIS ENGINE --- */
+const synth = window.speechSynthesis;
+let aiVoice = null;
+
+// Load voices asynchronously (browsers load these in the background)
+function loadVoices() {
+  const voices = synth.getVoices();
+  if (voices.length === 0) return;
+  
+  // Try to find a British/UK Male voice for that JARVIS aesthetic, otherwise fallback to default English
+  aiVoice = voices.find(v => v.name.includes('UK English Male') || v.name.includes('Great Britain'))
+         || voices.find(v => v.lang === 'en-GB')
+         || voices.find(v => v.lang.startsWith('en'))
+         || voices[0];
+}
+
+// Trigger load when voices are ready
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+// Run once immediately just in case they are already loaded
+loadVoices();
+
+function speakVoice(text) {
+  if (!synth) return;
+  
+  // Cancel any currently speaking audio so commands feel snappy
+  synth.cancel(); 
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  if (aiVoice) utterance.voice = aiVoice;
+  
+  utterance.pitch = 0.8; // Slightly deeper pitch
+  utterance.rate = 1.05; // Slightly faster pacing
+  
+  synth.speak(utterance);
+}
+
+/* --- UTILITIES --- */
 function typeText(el, text, speed) {
   return new Promise(res => {
     el.textContent = '';
@@ -130,9 +170,12 @@ function appendTerminalRow(text, isHighlight = false) {
   consoleBody.scrollTop = consoleBody.scrollHeight;
 }
 
-/* --- SIMULATE THE MULTI-AGENT ROLL CALL SEQUENCER --- */
+/* --- SIMULATE THE MULTI-AGENT ROLL CALL SEQUENCER WITH VOICE --- */
 async function triggerProtocolAssemble(e) {
   if (e) e.preventDefault();
+  
+  // Ensure voices are loaded
+  if (!aiVoice) loadVoices();
   
   const bannerText = document.getElementById('protocol-status-text');
   const indicator = document.querySelector('.status-indicator-node');
@@ -144,7 +187,11 @@ async function triggerProtocolAssemble(e) {
   // Clean up any old active instances safely
   nodes.forEach(n => n.classList.remove('activated'));
   
-  // Sequence each node precisely one after another like the video reel
+  // Initial speech
+  speakVoice("Avengers assemble. All agents reporting in.");
+  await sleep(2500); // Give the browser time to read the initial line
+  
+  // Sequence each node precisely one after another
   for (let index = 0; index < nodes.length; index++) {
     const node = nodes[index];
     const agentName = node.getAttribute('data-agent');
@@ -152,13 +199,23 @@ async function triggerProtocolAssemble(e) {
     
     node.classList.add('activated');
     if (bannerText) bannerText.textContent = `ORCHESTRATING PROTOCOLS // AGENT [${agentName}] ONLINE`;
+    
     appendTerminalRow(logMessage, true);
     
-    await sleep(700); // Visual step hold
+    // Command the browser to read the log out loud
+    speakVoice(logMessage);
+    
+    // Calculate a dynamic sleep based on text length so voices don't overlap
+    // Roughly 80ms per character, minimum 1800ms wait between agents
+    const voiceDelay = Math.max(1800, logMessage.length * 80);
+    await sleep(voiceDelay); 
   }
   
   if (bannerText) bannerText.textContent = "AVENGERS PROTOCOL ASSEMBLED // ALL CLUSTER NODES AT FULL CAPACITY";
-  appendTerminalRow("Operational Assembly Complete. System running optimal.", false);
+  
+  const finalMessage = "Operational Assembly Complete. What are your orders, Jack?";
+  appendTerminalRow(finalMessage, false);
+  speakVoice(finalMessage);
 }
 
 /* --- BACKGROUND GRAPH CHANNELS --- */
@@ -284,17 +341,24 @@ function initMainSite() {
   initParticles(); initScrollReveal(); initNavbar(); initTilt(); initCursor(); heroTyping();
   document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('visible'));
   
-  // Directly bind click interactions onto tactical layout cards to allow manual roll calls
+  // Bind click interactions to tactical layout cards for manual roll calls and voice feedback
   document.querySelectorAll('.agent-node').forEach(node => {
     node.addEventListener('click', () => {
+      // Ensure voices are loaded if clicked early
+      if (!aiVoice) loadVoices();
+
       node.classList.toggle('activated');
       const name = node.getAttribute('data-agent');
       const msg = node.getAttribute('data-log');
+
       if (node.classList.contains('activated')) {
         appendTerminalRow(`Manual override: Connection established to [${name}].`, true);
         appendTerminalRow(msg, false);
+        speakVoice(`Override accepted. ${msg}`);
       } else {
-        appendTerminalRow(`Connection closed with [${name}]. Node entering sleep mode.`, false);
+        const sleepMsg = `Connection closed with ${name}. Node entering sleep mode.`;
+        appendTerminalRow(sleepMsg, false);
+        speakVoice(sleepMsg);
       }
     });
   });
