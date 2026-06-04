@@ -447,7 +447,7 @@ strong { color:var(--cyan); }
 /* Scan beam across the image */
 .hv-scanbeam {
   position:absolute; inset:0; border-radius:50%;
-  overflow:hidden; z-index:2; pointer-events:none;
+  overflow:hidden; z-index:3; pointer-events:none;
 }
 .hv-scanbeam::after {
   content:''; position:absolute;
@@ -457,11 +457,19 @@ strong { color:var(--cyan); }
 }
 @keyframes hvscan { 0%,100%{top:5%} 50%{top:92%} }
 
+/* --- UPDATED CENTERING AND BACKGROUND FOR YOUR IMAGE --- */
 .hv-img {
-  position:absolute; inset:54px; border-radius:50%;
+  position:absolute; 
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:172px; /* Fixed width for perfect fit */
+  height:172px; /* Fixed height for perfect fit */
+  border-radius:50%;
   object-fit:cover; z-index:1;
   border:3px solid rgba(0,212,255,.4);
   box-shadow:0 0 30px rgba(0,212,255,.3);
+  background:var(--bg); /* Prevents background elements from bleeding through */
 }
 
 .hv-badge {
@@ -790,7 +798,12 @@ footer {
 
   /* Rings */
   .hv-rings { width:220px; height:220px; }
-  .hv-img { inset:42px; }
+  
+  /* --- RESPONSIVE ADJUSTMENT FOR YOUR IMAGE --- */
+  .hv-img { 
+    width:136px; 
+    height:136px; 
+  }
 
   /* Sections */
   .section, .section.alt { padding:4rem 1.2rem; }
@@ -806,4 +819,4 @@ footer {
   .hero-name { font-size:2.2rem; }
   .proj-grid, .about-grid { grid-template-columns:1fr; }
   .contact-grid { grid-template-columns:1fr; }
-  }
+}
