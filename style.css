@@ -334,14 +334,25 @@ strong { color:var(--cyan); }
 .terminal-header {
   background:rgba(255,255,255,.02); border-bottom:1px solid var(--border); padding:.5rem 1rem; display:flex; align-items:center; gap:.4rem;
 }
-.t-dot { width:6px; height:6px; border-radius:50%; }
-.t-dot.red { background:#ff4444; } .t-dot.yellow { background:#ffbb00; } .t-dot.green { background:#00ff88; }
+
+/* Sequential Blinking Dots Update */
+.t-dot { width:7px; height:7px; border-radius:50%; opacity:0.2; animation: tBlink 1.5s infinite; }
+.t-dot.red { background:#ff4444; color:#ff4444; animation-delay: 0s; }
+.t-dot.yellow { background:#ffbb00; color:#ffbb00; animation-delay: 0.5s; }
+.t-dot.green { background:#00ff88; color:#00ff88; animation-delay: 1s; }
+
+@keyframes tBlink {
+  0%, 100% { opacity: 0.2; box-shadow: none; transform: scale(1); }
+  50% { opacity: 1; box-shadow: 0 0 8px currentColor; transform: scale(1.15); }
+}
+
 .t-title { font-size:.6rem; color:var(--muted); margin-left:.5rem; letter-spacing:.05em; }
 .terminal-body { padding:1rem; height:120px; overflow-y:auto; display:flex; flex-direction:column; gap:.4rem; font-size:.65rem; line-height:1.5; color:#8cb3d9; }
 .term-row { animation:rowIn .25s ease-out; }
 @keyframes rowIn { from{opacity:0; transform:translateY(3px)} to{opacity:1; transform:none} }
 .text-mute { color:var(--muted); }
 .text-highlight { color:var(--cyan); }
+
 
 /* ── BUILD REGISTRY CARD MATRICES (PROJECTS) ── */
 .proj-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; }
