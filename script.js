@@ -362,7 +362,7 @@ function initTilt() {
       const cx = r.left + r.width / 2;
       const cy = r.top  + r.height / 2;
       const rx = ((e.clientY - cy) / (r.height / 2)) * -8;
-      const ry = ((e.clientX - cx) / (r.width  / 2)) *  8;
+      const ry = ((e.clientX - cx) / (r.width  / 2)) * 8;
       card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
     });
     card.addEventListener('mouseleave', () => {
